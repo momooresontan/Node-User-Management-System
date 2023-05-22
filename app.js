@@ -24,7 +24,9 @@ app.engine("hbs", exphbs.engine({ extname: ".hbs" }));
 app.set("view engine", "hbs");
 
 //Router
-app.get();
+app.get("", (req, res) => {
+  res.render("index");
+});
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
