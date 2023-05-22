@@ -16,6 +16,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //Parse application/json
 app.use(bodyParser.json());
 
+//Static files
+app.use(express.static("public"));
+
+//Template Engine
+app.engine("hbs", exphbs.engine({ extname: ".hbs" }));
+app.set("view engine", "hbs");
+
+//Router
+app.get();
+
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });
