@@ -23,6 +23,14 @@ app.use(express.static("public"));
 app.engine("hbs", exphbs.engine({ extname: ".hbs" }));
 app.set("view engine", "hbs");
 
+//Connection Pool
+const pool = mysql.createPool({
+  connectionLimit: 100,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+});
+
 //Router
 app.get("", (req, res) => {
   res.render("index");
