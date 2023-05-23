@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const dotenv = require("dotenv");
 
+const userRouter = require("./server/routes/userRoute");
+
 dotenv.config();
 
 const app = express();
@@ -38,10 +40,8 @@ pool.getConnection((err, connection) => {
   console.log(`Connected as ID ${connection.threadId}`);
 });
 
-//Router
-app.get("", (req, res) => {
-  res.render("index");
-});
+//Mounting routes
+app.use("/", userRouter);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
