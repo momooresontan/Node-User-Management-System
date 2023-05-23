@@ -36,12 +36,20 @@
               <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
           </ul>
-          <form class="d-flex" role="search">
+
+          <form
+            class="d-flex"
+            role="search"
+            method="POST"
+            action="/"
+            novalidate
+          >
             <input
               class="form-control me-2"
               type="search"
               placeholder="Search"
               aria-label="Search"
+              name="search"
             />
             <button class="btn btn-outline-light" type="submit">Search</button>
           </form>

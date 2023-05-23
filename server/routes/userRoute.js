@@ -6,4 +6,6 @@ const router = express.Router();
 //Create, find, update, delete
 router.get("/", userController.view);
 
+router.post("/", userController.find);
+
 module.exports = router;

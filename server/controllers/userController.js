@@ -24,14 +24,37 @@ exports.view = (req, res) => {
       (err, rows) => {
         //When the connection is done, release it
         connection.release();
-
         if (!err) {
           res.render("index", { rows });
         } else {
           console.log(err);
         }
+        //console.log(`The data from user table:`, rows);
+      }
+    );
+  });
+};
 
-        console.log(`The data from user table:`, rows);
+// Find user by search
+exports.find = (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err; // not connected
+    console.log(`Connected as ID ${connection.threadId}`);
+
+    let searchTerm = req.body.search;
+    //console.log(searchTerm);
+    //Use the connection
+    connection.query(
+      "SELECT * FROM user WHERE status = 'active'",
+      (err, rows) => {
+        //When the connection is done, release it
+        connection.release();
+        if (!err) {
+          res.render("index", { rows });
+        } else {
+          console.log(err);
+        }
+        //console.log(`The data from user table:`, rows);
       }
     );
   });
