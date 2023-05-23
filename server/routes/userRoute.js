@@ -1,9 +1,9 @@
 const express = require("express");
+const userController = require("../controllers/userController");
+
 const router = express.Router();
 
-//Router
-router.get("", (req, res) => {
-  res.render("index");
-});
+//Create, find, update, delete
+router.get("/", userController.view);
 
 module.exports = router;
