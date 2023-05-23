@@ -20,7 +20,16 @@ exports.view = (req, res) => {
 
     //Use the connection
     connection.query("SELECT * FROM user", (err, rows) => {
-      //When the connection is done
+      //When the connection is done, release it
+      connection.release();
+
+      if (!err) {
+        res.render("index", { rows });
+      } else {
+        console.log(err);
+      }
+
+      console.log(`The data from user table: ${rows}`);
     });
   });
 };
