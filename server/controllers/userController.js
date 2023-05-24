@@ -91,5 +91,21 @@ exports.create = (req, res) => {
 
 // Edit user by id
 exports.edit = (req, res) => {
-  res.render("edit-user");
+  const id = req.params.id;
+  pool.getConnection((err, connection) => {
+    if (err) throw err; // not connected
+    console.log(`Connected as ID ${connection.threadId}`);
+
+    //Use the connection
+    connection.query("SELECT * FROM user WHERE id = ?", [id], (err, rows) => {
+      //When the connection is done, release it
+      connection.release();
+      if (!err) {
+        res.render("index", { rows });
+      } else {
+        console.log(err);
+      }
+      //console.log(`The data from user table:`, rows);
+    });
+  });
 };
