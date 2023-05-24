@@ -45,8 +45,8 @@ exports.find = (req, res) => {
     //console.log(searchTerm);
     //Use the connection
     connection.query(
-      "SELECT * FROM user WHERE first_name LIKE ?",
-      ["%" + searchTerm + "%"],
+      "SELECT * FROM user WHERE first_name LIKE ? OR last_name LIKE ?",
+      ["%" + searchTerm + "%", "%" + searchTerm + "%"],
       (err, rows) => {
         //When the connection is done, release it
         connection.release();
