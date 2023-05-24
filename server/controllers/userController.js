@@ -101,7 +101,7 @@ exports.edit = (req, res) => {
       //When the connection is done, release it
       connection.release();
       if (!err) {
-        res.render("index", { rows });
+        res.render("edit-user", { rows });
       } else {
         console.log(err);
       }
