@@ -8,4 +8,6 @@ router.get("/", userController.view);
 
 router.post("/", userController.find);
 
+router.get("/adduser", userController.newUser);
+
 module.exports = router;

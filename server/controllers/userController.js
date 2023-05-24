@@ -60,3 +60,8 @@ exports.find = (req, res) => {
     );
   });
 };
+
+// add new user
+exports.newUser = (req, res) => {
+  res.render("add-user");
+};
