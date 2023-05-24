@@ -88,3 +88,8 @@ exports.create = (req, res) => {
     );
   });
 };
+
+// Edit user by id
+exports.edit = (req, res) => {
+  res.render("edit-user");
+};
