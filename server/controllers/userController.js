@@ -63,16 +63,15 @@ exports.find = (req, res) => {
 
 // add new user
 exports.newUser = (req, res) => {
+  const { first_name, last_name, email, phone, comments } = req.body;
   pool.getConnection((err, connection) => {
     if (err) throw err; // not connected
     console.log(`Connected as ID ${connection.threadId}`);
 
-    let searchTerm = req.body.search;
-    //console.log(searchTerm);
     //Use the connection
     connection.query(
-      "SELECT * FROM user WHERE first_name LIKE ? OR last_name LIKE ?",
-      ["%" + searchTerm + "%", "%" + searchTerm + "%"],
+      "INSERT INTO user SET first_name = ?, last_name = ?, email = ?, phone = ?, comments = ?",
+      [first_name, last_name, email, phone, comments],
       (err, rows) => {
         //When the connection is done, release it
         connection.release();
