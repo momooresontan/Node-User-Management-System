@@ -9,7 +9,7 @@ const userRouter = require("./server/routes/userRoute");
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 //Parsing middleware
 //Parse application/x-www-form-urlencoded

@@ -61,8 +61,12 @@ exports.find = (req, res) => {
   });
 };
 
-// add new user
 exports.newUser = (req, res) => {
+  res.render("add-user");
+};
+
+// add new user
+exports.create = (req, res) => {
   const { first_name, last_name, email, phone, comments } = req.body;
   pool.getConnection((err, connection) => {
     if (err) throw err; // not connected
@@ -76,7 +80,7 @@ exports.newUser = (req, res) => {
         //When the connection is done, release it
         connection.release();
         if (!err) {
-          res.render("add-user", { rows });
+          res.render("add-user", { alert: "User added successfully" });
         } else {
           console.log(err);
         }

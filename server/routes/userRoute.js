@@ -10,4 +10,6 @@ router.post("/", userController.find);
 
 router.get("/adduser", userController.newUser);
 
+router.post("/adduser", userController.create);
+
 module.exports = router;

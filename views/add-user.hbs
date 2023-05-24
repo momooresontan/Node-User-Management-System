@@ -5,6 +5,18 @@
   </ol>
 </nav>
 
+{{#if alert}}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{alert}}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+{{/if}}
+
 <form
   action="/adduser"
   class="row g-3 needs-validation"
@@ -35,7 +47,6 @@
       <label for="floatingInput">Last Name</label>
     </div>
   </div>
-
   <div class="col-6">
     <div class="form-floating mb-3">
       <input
@@ -48,7 +59,6 @@
       <label for="floatingInput">Email</label>
     </div>
   </div>
-
   <div class="col-6">
     <div class="form-floating mb-3">
       <input
@@ -61,21 +71,19 @@
       <label for="floatingInput">Phone</label>
     </div>
   </div>
-
   <div class="col-12">
     <div class="form-floating mb-3">
-      <input
+      <textarea
         type="text"
         class="form-control"
         id="floatingInput"
-        placeholder="Comments"
+        placeholder="Leave a comment here"
         name="comments"
         style="height: 200px"
-      />
+      ></textarea>
       <label for="floatingInput">Comments</label>
     </div>
   </div>
-
   <div class="col-12 d-grid">
     <button class="btn btn-primary" type="submit">Submit</button>
   </div>
