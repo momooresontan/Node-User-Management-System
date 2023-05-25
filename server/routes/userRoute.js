@@ -6,7 +6,7 @@ const router = express.Router();
 //Create, find, update, delete
 router.get("/", userController.view);
 router.post("/", userController.find);
-router.post("/:id", userController.delete);
+router.get("/:id", userController.delete);
 
 router.get("/adduser", userController.newUser);
 router.post("/adduser", userController.create);

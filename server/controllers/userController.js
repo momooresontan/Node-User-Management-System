@@ -159,20 +159,38 @@ exports.update = (req, res) => {
 // Delete user
 exports.delete = (req, res) => {
   const id = req.params.id;
-  pool.getConnection((err, connection) => {
-    if (err) throw err; // not connected
-    console.log(`Connected as ID ${connection.threadId}`);
+  // pool.getConnection((err, connection) => {
+  //   if (err) throw err; // not connected
+  //   console.log(`Connected as ID ${connection.threadId}`);
+  //   //Use the connection
+  //   connection.query("DELETE FROM user WHERE id = ?", [id], (err, rows) => {
+  //     //When the connection is done, release it
+  //     connection.release();
+  //     if (!err) {
+  //       res.redirect("/");
+  //     } else {
+  //       console.log(err);
+  //     }
+  //     //console.log(`The data from user table:`, rows);
+  //   });
+  // });
 
-    //Use the connection
-    connection.query("SELECT * FROM user WHERE id = ?", [id], (err, rows) => {
-      //When the connection is done, release it
-      connection.release();
-      if (!err) {
-        res.redirect("/");
-      } else {
-        console.log(err);
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    connection.query(
+      "UPDATE user SET status = ? WHERE id = ?",
+      ["removed", id],
+      (err, rows) => {
+        //When the connection is done, release it
+        connection.release();
+        if (!err) {
+          let removedUser = encodeURIComponent("User removed successfully!");
+          res.redirect("/?removed=" + removedUser);
+        } else {
+          console.log(err);
+        }
+        console.log();
       }
-      //console.log(`The data from user table:`, rows);
-    });
+    );
   });
 };
