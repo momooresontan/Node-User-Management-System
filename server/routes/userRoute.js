@@ -12,6 +12,6 @@ router.get("/adduser", userController.newUser);
 router.post("/adduser", userController.create);
 
 router.get("/edituser/:id", userController.edit);
-//router.patch("/edituser:id", userController.create);
+router.post("/edituser/:id", userController.update);
 
 module.exports = router;

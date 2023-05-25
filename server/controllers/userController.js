@@ -119,13 +119,31 @@ exports.update = (req, res) => {
 
     //Use the connection
     connection.query(
-      "UPDATE user SET first_name = ?, last_name = ?, email = ?, phone = ?, comments = ?",
-      [first_name, last_name, email, phone, comments],
+      "UPDATE user SET first_name = ?, last_name = ?, email = ?, phone = ?, comments = ? WHERE id = ?",
+      [first_name, last_name, email, phone, comments, id],
       (err, rows) => {
         //When the connection is done, release it
         connection.release();
         if (!err) {
-          res.render("edit-user", { rows });
+          pool.getConnection((err, connection) => {
+            if (err) throw err; // not connected
+            console.log(`Connected as ID ${connection.threadId}`);
+            //Use the connection
+            connection.query(
+              "SELECT * FROM user WHERE id = ?",
+              [id],
+              (err, rows) => {
+                //When the connection is done, release it
+                connection.release();
+                if (!err) {
+                  res.render("edit-user", { rows });
+                } else {
+                  console.log(err);
+                }
+                //console.log(`The data from user table:`, rows);
+              }
+            );
+          });
         } else {
           console.log(err);
         }
