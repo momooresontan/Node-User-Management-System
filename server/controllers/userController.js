@@ -203,18 +203,15 @@ exports.view = (req, res) => {
     console.log(`Connected as ID ${connection.threadId}`);
 
     //Use the connection
-    connection.query(
-      "SELECT * FROM user WHERE status = 'active'",
-      (err, rows) => {
-        //When the connection is done, release it
-        connection.release();
-        if (!err) {
-          res.render("index", { rows });
-        } else {
-          console.log(err);
-        }
-        //console.log(`The data from user table:`, rows);
+    connection.query("SELECT * FROM user WHERE id = ?", [id], (err, rows) => {
+      //When the connection is done, release it
+      connection.release();
+      if (!err) {
+        res.render("view-user", { rows });
+      } else {
+        console.log(err);
       }
-    );
+      //console.log(`The data from user table:`, rows);
+    });
   });
 };
