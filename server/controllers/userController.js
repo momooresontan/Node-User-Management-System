@@ -13,7 +13,7 @@ const pool = mysql.createPool({
 });
 
 //View Users
-exports.view = (req, res) => {
+exports.overview = (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err; // not connected
     console.log(`Connected as ID ${connection.threadId}`);
@@ -158,7 +158,7 @@ exports.update = (req, res) => {
 
 // Delete user
 exports.delete = (req, res) => {
-  const id = req.params.id;
+  //const id = req.params.id;
   // pool.getConnection((err, connection) => {
   //   if (err) throw err; // not connected
   //   console.log(`Connected as ID ${connection.threadId}`);
@@ -174,7 +174,7 @@ exports.delete = (req, res) => {
   //     //console.log(`The data from user table:`, rows);
   //   });
   // });
-
+  const id = req.params.id;
   pool.getConnection((err, connection) => {
     if (err) throw err;
     connection.query(
@@ -189,7 +189,31 @@ exports.delete = (req, res) => {
         } else {
           console.log(err);
         }
-        console.log();
+        console.log("The data from beer table are: \n", rows);
+      }
+    );
+  });
+};
+
+// View user
+exports.view = (req, res) => {
+  const id = req.params.id;
+  pool.getConnection((err, connection) => {
+    if (err) throw err; // not connected
+    console.log(`Connected as ID ${connection.threadId}`);
+
+    //Use the connection
+    connection.query(
+      "SELECT * FROM user WHERE status = 'active'",
+      (err, rows) => {
+        //When the connection is done, release it
+        connection.release();
+        if (!err) {
+          res.render("index", { rows });
+        } else {
+          console.log(err);
+        }
+        //console.log(`The data from user table:`, rows);
       }
     );
   });
