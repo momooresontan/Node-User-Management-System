@@ -25,7 +25,8 @@ exports.overview = (req, res) => {
         //When the connection is done, release it
         connection.release();
         if (!err) {
-          res.render("index", { rows });
+          let removedUser = req.query.removed;
+          res.render("index", { rows, removedUser });
         } else {
           console.log(err);
         }
