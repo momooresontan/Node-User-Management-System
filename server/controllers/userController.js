@@ -109,3 +109,28 @@ exports.edit = (req, res) => {
     });
   });
 };
+// Update user
+exports.update = (req, res) => {
+  const id = req.params.id;
+  const { first_name, last_name, email, phone, comments } = req.body;
+  pool.getConnection((err, connection) => {
+    if (err) throw err; // not connected
+    console.log(`Connected as ID ${connection.threadId}`);
+
+    //Use the connection
+    connection.query(
+      "UPDATE user SET first_name = ?, last_name = ?, email = ?, phone = ?, comments = ?",
+      [first_name, last_name, email, phone, comments],
+      (err, rows) => {
+        //When the connection is done, release it
+        connection.release();
+        if (!err) {
+          res.render("edit-user", { rows });
+        } else {
+          console.log(err);
+        }
+        //console.log(`The data from user table:`, rows);
+      }
+    );
+  });
+};
