@@ -136,7 +136,10 @@ exports.update = (req, res) => {
                 //When the connection is done, release it
                 connection.release();
                 if (!err) {
-                  res.render("edit-user", { rows });
+                  res.render("edit-user", {
+                    rows,
+                    alert: `${first_name} has been updated.`,
+                  });
                 } else {
                   console.log(err);
                 }
@@ -150,5 +153,26 @@ exports.update = (req, res) => {
         //console.log(`The data from user table:`, rows);
       }
     );
+  });
+};
+
+// Delete user
+exports.delete = (req, res) => {
+  const id = req.params.id;
+  pool.getConnection((err, connection) => {
+    if (err) throw err; // not connected
+    console.log(`Connected as ID ${connection.threadId}`);
+
+    //Use the connection
+    connection.query("SELECT * FROM user WHERE id = ?", [id], (err, rows) => {
+      //When the connection is done, release it
+      connection.release();
+      if (!err) {
+        res.redirect("/");
+      } else {
+        console.log(err);
+      }
+      //console.log(`The data from user table:`, rows);
+    });
   });
 };
